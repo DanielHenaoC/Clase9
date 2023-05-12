@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QMainWindow, QDesktopWidget, QLabel, QHBoxLayout, QA
 from PyQt5 import QtGui, QtCore
 from PyQt5.QtCore import Qt
 import sys
+from cliente import Cliente
 
 class Ventana1(QMainWindow):
 
@@ -242,6 +243,8 @@ class Ventana1(QMainWindow):
                                           "padding: 10px;"
                                           "margin-top: 40px;")
 
+        self.botonbuscar.clicked.connect(self.accion_botonBuscar)
+
         self.botonRecuperar = QPushButton("Recuperar")
 
         self.botonRecuperar.setFixedWidth(90)
@@ -253,33 +256,11 @@ class Ventana1(QMainWindow):
 
         self.ladoDerecho.addRow(self.botonbuscar, self.botonRecuperar)
 
-
-
-
-
-
         self.horizontal.addLayout(self.ladoDerecho)
 
         # ------------- SIEMPRE PONER DE ULTIMO ---------------------
         self.fondo.setLayout(self.horizontal)
 
-    # Metodo del botonLimpiar:
-    def accion_botonLimpiar(self):
-        self.nombreCompleto.setText('')
-        self.usuario.setText('')
-        self.password.setText('')
-        self.password2.setText('')
-        self.documento.setText('')
-        self.correo.setText('')
-        self.pregunta1.setText('')
-        self.respuesta1.setText('')
-        self.pregunta2.setText('')
-        self.respuesta2.setText('')
-        self.pregunta3.setText('')
-        self.respuesta3.setText('')
-
-    # Metodo del botonRegistrar
-    def accion_botonRegistrar(self):
         self.ventanaDialogo = QDialog(None, QtCore.Qt.WindowSystemMenuHint | QtCore.Qt.WindowTitleHint)
 
         self.ventanaDialogo.resize(300, 150)
@@ -305,6 +286,24 @@ class Ventana1(QMainWindow):
         self.ventanaDialogo.setLayout(self.vertical)
 
         self.datosCorrectos = True
+
+    # Metodo del botonLimpiar:
+    def accion_botonLimpiar(self):
+        self.nombreCompleto.setText('')
+        self.usuario.setText('')
+        self.password.setText('')
+        self.password2.setText('')
+        self.documento.setText('')
+        self.correo.setText('')
+        self.pregunta1.setText('')
+        self.respuesta1.setText('')
+        self.pregunta2.setText('')
+        self.respuesta2.setText('')
+        self.pregunta3.setText('')
+        self.respuesta3.setText('')
+
+    # Metodo del botonRegistrar
+    def accion_botonRegistrar(self):
 
         # Validación de la contraseñas
         if (
@@ -346,7 +345,6 @@ class Ventana1(QMainWindow):
                 self.nombreCompleto.text() + ";"
                 + self.usuario.text() + ";"
                 + self.password.text() + ";"
-                + self.password2.text() + ";"
                 + self.documento.text() + ";"
                 + self.correo.text() + ";"
                 + self.pregunta1.text() + ";"
@@ -370,15 +368,84 @@ class Ventana1(QMainWindow):
                     break
             self.file.close()
 
+    # Metodo boton buscar
 
+    def accion_botonBuscar(self):
+        self.ventanaDialogo.setWindowTitle("Buscar Pregunta de validación")
+        if (self.documento.text() == ''):
 
+            self.datosCorrectos = False
 
+            self.mensaje.setText("Si va a buscar la pregunta para recuperar la contraseña."
+                                 "\ndebe primero ingresar el documento.")
 
+            self.ventanaDialogo.exec_()
 
+        if (not self.documento.text().isnumeric()):
+            self.datosCorrectos = False
 
+            self.mensaje.setText("El documento debe ser numerico\nno ingrese letras ni caracteres especiales")
 
+            self.ventanaDialogo.exec_()
 
+            self.documento.setText('') # Limpiar el campo del documento
 
+        # Proceso para mostrar los archivos planos
+        if (self.datosCorrectos):
+
+            self.file = open('datos/clientes.txt', 'rb')
+
+            usuario = [] # Para guardar los usuarios
+
+            while self.file:
+                linea = self.file.readline().decode('UTF-8')
+
+                lista = linea.split(";")
+
+                if linea == '':
+                    break
+
+                # Creamos un objeto tipo cliente
+                u = Cliente(
+                    lista[0],
+                    lista[1],
+                    lista[2],
+                    lista[3],
+                    lista[4],
+                    lista[5],
+                    lista[6],
+                    lista[7],
+                    lista[8],
+                    lista[9],
+                    lista[10]
+                )
+
+                # Metemos el objeto en la lista usuario
+                usuario.append(u)
+
+            # Cerramos el archivo
+            self.file.close()
+
+            # En este punto ya tenemos la lista usuarios con todos los usuarios:
+
+            existeDocumento = False
+
+            for u in usuario:
+
+                if u.documento == self.documento.text():
+                    # Mostramos las preguntas en el formulario
+                    self.pregunta1.setText(u.pregunta1)
+                    self.pregunta2.setText(u.pregunta2)
+                    self.pregunta3.setText(u.pregunta3)
+
+                    existeDocumento = True
+
+                    break # Paramos el for
+
+            if (not existeDocumento):
+                self.mensaje.setText("No existe un usuario con este documento:\n" + self.documento.text())
+
+                self.ventanaDialogo.exec_()
 
 
 if __name__ == '__main__':
