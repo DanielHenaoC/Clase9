@@ -285,7 +285,7 @@ class Ventana1(QMainWindow):
 
         self.ventanaDialogo.setLayout(self.vertical)
 
-        self.datosCorrectos = True
+
 
     # Metodo del botonLimpiar:
     def accion_botonLimpiar(self):
@@ -304,6 +304,8 @@ class Ventana1(QMainWindow):
 
     # Metodo del botonRegistrar
     def accion_botonRegistrar(self):
+
+        self.datosCorrectos = True
 
         # Validación de la contraseñas
         if (
@@ -371,6 +373,9 @@ class Ventana1(QMainWindow):
     # Metodo boton buscar
 
     def accion_botonBuscar(self):
+
+        self.datosCorrectos = True
+        
         self.ventanaDialogo.setWindowTitle("Buscar Pregunta de validación")
         if (self.documento.text() == ''):
 
