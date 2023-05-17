@@ -13,7 +13,7 @@ class Ventana1(QMainWindow):
 
         self.setWindowTitle("Formulario de registro")
 
-        self.setWindowIcon(QtGui.QIcon("imagen/pngwing.com (1).png"))
+        self.setWindowIcon(QtGui.QIcon("imagen/sherry-christian-8Myh76_3M2U-unsplash.jpg"))
 
         self.ancho = 1000
         self.alto = 700
@@ -30,7 +30,7 @@ class Ventana1(QMainWindow):
 
         self.fondo = QLabel(self)
 
-        self.imagenFondo = QPixmap("imagen/sherry-christian-8Myh76_3M2U-unsplash.jpg")
+        self.imagenFondo = QPixmap("imagen/daniel.png")
 
         self.fondo.setPixmap(self.imagenFondo)
 
@@ -254,6 +254,8 @@ class Ventana1(QMainWindow):
                                           "padding: 10px;"
                                           "margin-top: 40px;")
 
+        self.botonRecuperar.clicked.connect(self.accion_botonRecuperar)
+
         self.ladoDerecho.addRow(self.botonbuscar, self.botonRecuperar)
 
         self.horizontal.addLayout(self.ladoDerecho)
@@ -284,8 +286,6 @@ class Ventana1(QMainWindow):
         self.vertical.addWidget(self.opciones)
 
         self.ventanaDialogo.setLayout(self.vertical)
-
-
 
     # Metodo del botonLimpiar:
     def accion_botonLimpiar(self):
@@ -354,7 +354,7 @@ class Ventana1(QMainWindow):
                 + self.pregunta2.text() + ";"
                 + self.respuesta2.text() + ";"
                 + self.pregunta3.text() + ";"
-                + self.respuesta3.text() + "\n"
+                + self.respuesta3.text() + '\n'
                 , encoding='UTF-8'))
 
             # Cerramos el archivo.
@@ -375,7 +375,7 @@ class Ventana1(QMainWindow):
     def accion_botonBuscar(self):
 
         self.datosCorrectos = True
-        
+
         self.ventanaDialogo.setWindowTitle("Buscar Pregunta de validación")
         if (self.documento.text() == ''):
 
@@ -422,7 +422,7 @@ class Ventana1(QMainWindow):
                     lista[7],
                     lista[8],
                     lista[9],
-                    lista[10]
+                    lista[10],
                 )
 
                 # Metemos el objeto en la lista usuario
@@ -445,13 +445,100 @@ class Ventana1(QMainWindow):
 
                     existeDocumento = True
 
-                    break # Paramos el for
+                    break
 
             if (not existeDocumento):
                 self.mensaje.setText("No existe un usuario con este documento:\n" + self.documento.text())
 
                 self.ventanaDialogo.exec_()
 
+    def accion_botonRecuperar(self):
+
+        self.datosCorrectos = True
+
+        self.ventanaDialogo.setWindowTitle("Recuperar contraseña")
+
+        if (self.pregunta1.text() == '' or self.pregunta2.text() == '' or self.pregunta3.text() == ''):
+
+            self.datosCorrectos = False
+
+            self.mensaje.setText("Para recuperar la contraseña debe\nbuscar las preguntas de verificación."
+                                 "\nPrimero ingrese su documento y luego\npresione el boton 'buscar'")
+
+            self.ventanaDialogo.exec_()
+
+        if (self.pregunta1.text() != '' and self.respuesta1.text() == '' and self.pregunta2.text() != '' and
+            self.respuesta2.text() == '' and self.pregunta3.text() != '' and self.respuesta3.text() == ''):
+
+            self.datosCorrectos = False
+
+            self.mensaje.setText("Para recuperar la contraseña bede\ningresar la respuesta de cada pregunta.")
+
+            self.ventanaDialogo.exec_()
+
+        if (self.datosCorrectos):
+            self.file = open('datos/clientes.txt', 'rb')
+
+            usuario = []
+
+            while self.file:
+                linea = self.file.readline().decode('UTF-8')
+
+                lista = linea.split(";")
+
+                if linea == '':
+                    break
+
+                u = Cliente(
+                    lista[0],
+                    lista[1],
+                    lista[2],
+                    lista[3],
+                    lista[4],
+                    lista[5],
+                    lista[6],
+                    lista[7],
+                    lista[8],
+                    lista[9],
+                    lista[10],
+
+                )
+                usuario.append(u)
+
+            self.file.close()
+
+            existeDocumento = False
+
+            resp1 = ''
+            resp2 = ''
+            resp3 = ''
+            passw = ''
+
+            for u in usuario:
+
+                if u.documento == self.documento.text():
+                    resp1 = u.respuesta1
+                    resp2 = u.respuesta2
+                    resp3 = u.respuesta3
+                    passw = u.password
+                    break
+
+            if (
+                    self.respuesta1.text().lower().strip() == resp1.lower().strip() and
+                    self.respuesta2.text().lower().strip() == resp2.lower().strip() and
+                    self.respuesta1.text().lower().strip() == resp1.lower().strip()
+            ):
+                self.accion_botonLimpiar()
+
+                self.mensaje.setText("Contraseña: " + passw)
+
+                self.ventanaDialogo.exec_()
+
+            else:
+                self.mensaje.setText("Las respuestas son incorrecta para estas"
+                                     "\npreguntas de recuperación de contraseña")
+
+                self.ventanaDialogo.exec_()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

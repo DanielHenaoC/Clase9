@@ -1,6 +1,5 @@
 class Cliente:
-
-    def __init__(self, nombreCompleto,
+    def __init__(self,nombreCompleto,
                  usuario,
                  password,
                  documento,
@@ -10,7 +9,8 @@ class Cliente:
                  pregunta2,
                  respuesta2,
                  pregunta3,
-                 respuesta3):
+                 respuesta3
+                 ):
         self.nombreCompleto = nombreCompleto
         self.usuario = usuario
         self.password = password
