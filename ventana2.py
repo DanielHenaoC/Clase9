@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QMainWindow, QDesktopWidget, QLabel, QHBoxLayout, QV
 from PyQt5 import QtGui
 
 from cliente import Cliente
+from ventana3 import Ventana3
 
 
 class Ventana2(QMainWindow):
@@ -106,20 +107,34 @@ class Ventana2(QMainWindow):
 
         self.botones.idClicked.connect(self.metodo_accionBotones)
 
+        self.botoTabular = QPushButton("Forma Tabular")
+        self.botoTabular.setFixedWidth(100)
+        self.botoTabular.setStyleSheet("background-color: #008b45; color: #FFFFFF; padding: 10px; margin-top: 10px")
+        self.botoTabular.clicked.connect(self.metodo_formulario)
+        self.vertical.addWidget(self.botoTabular)
+
+
+        self.botonVolver = QPushButton("Volver")
+        self.botonVolver.setFixedWidth(90)
+        self.botonVolver.setStyleSheet("background-color: #008B45; color: #FFFFFF; padding: 10px; margin-top: 10px;")
+        self.botonVolver.clicked.connect(self.metodo_volver)
+        self.vertical.addWidget(self.botonVolver)
+
 
         # OJO PONER AL FINAL
         self.fondo.setLayout(self.vertical)
 
-
-
-
     def metodo_accionBotones(self,cedulaUsuario):
         print(cedulaUsuario)
 
+    def metodo_volver(self):
+        self.hide()
+        self.ventanaAnterior.show()
 
-
-
-
+    def metodo_formulario(self):
+        self.hide()
+        self.ventana3 = Ventana3(self)
+        self.ventana3.show()
 
 
 if __name__ == '__main__':
