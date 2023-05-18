@@ -5,6 +5,7 @@ from PyQt5 import QtGui, QtCore
 from PyQt5.QtCore import Qt
 import sys
 from cliente import Cliente
+from ventana2 import  Ventana2
 
 class Ventana1(QMainWindow):
 
@@ -257,6 +258,15 @@ class Ventana1(QMainWindow):
         self.botonRecuperar.clicked.connect(self.accion_botonRecuperar)
 
         self.ladoDerecho.addRow(self.botonbuscar, self.botonRecuperar)
+
+        self.botonContinuar = QPushButton("Continuar")
+        self.botonContinuar.setFixedWidth(90)
+        self.botonContinuar.setStyleSheet("background-color: #008B45; color: #FFFFFF; padding: 10px; margin-top: 10px;")
+        self.botonContinuar.clicked.connect(self.accion_botonContinuar)
+        self.ladoDerecho.addRow(self.botonContinuar)
+
+
+
 
         self.horizontal.addLayout(self.ladoDerecho)
 
@@ -539,6 +549,12 @@ class Ventana1(QMainWindow):
                                      "\npreguntas de recuperación de contraseña")
 
                 self.ventanaDialogo.exec_()
+
+    def accion_botonContinuar(self):
+        self.hide()
+        self.ventana2 = Ventana2(self)
+        self.ventana2.show()
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
