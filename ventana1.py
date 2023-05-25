@@ -51,25 +51,18 @@ class Ventana1(QMainWindow):
         self.ladoizquierdo = QFormLayout()
 
         self.letrero1 = QLabel()
-
         self.letrero1.setText("Información del cliente")
-
         self.letrero1.setFont(QFont("Andale Mono", 20))
-
         self.letrero1.setStyleSheet("color: #000080")
-
         self.ladoizquierdo.addRow(self.letrero1)
 
         self.letrero2 = QLabel()
-
         self.letrero2.setFixedWidth(340)
-
         self.letrero2.setText("Por favor ingrese la información de cliente "
                               "\nen el formulario de abajo. los campos marcados"
                               "\ncon asterisco son obligatorios.")
 
         self.letrero2.setFont(QFont("Andale Mono", 10))
-
         self.letrero2.setStyleSheet("color: #000080; margin-bottom: 40px;"
                                     "margin-top: 20px;"
                                     "padding-bottom: 10px;"
@@ -82,40 +75,32 @@ class Ventana1(QMainWindow):
 
         self.nombreCompleto = QLineEdit()
         self.nombreCompleto.setFixedWidth(220)
-
         self.ladoizquierdo.addRow("Nombre Completo*", self.nombreCompleto)
 
         self.usuario = QLineEdit()
         self.usuario.setFixedWidth(220)
-
         self.ladoizquierdo.addRow("Usuario*", self.usuario)
 
         self.password = QLineEdit()
         self.password.setFixedWidth(220)
         self.password.setEchoMode(QLineEdit.Password)
-
         self.ladoizquierdo.addRow("Password*", self.password)
 
         self.password2 = QLineEdit()
         self.password2.setFixedWidth(220)
         self.password2.setEchoMode(QLineEdit.Password)
-
         self.ladoizquierdo.addRow("Password*", self.password2)
 
         self.documento = QLineEdit()
         self.documento.setFixedWidth(220)
-
         self.ladoizquierdo.addRow("Documento*", self.documento)
 
         self.correo = QLineEdit()
         self.correo.setFixedWidth(220)
-
         self.ladoizquierdo.addRow("Correo*", self.correo)
 
         self.botonRegistrar = QPushButton("Registrar")
-
         self.botonRegistrar.setFixedWidth(90)
-
         self.botonRegistrar.setStyleSheet("background-color: #008B45;"
                                           "color: #FFFFFF;"
                                           "padding: 10px;"
@@ -236,27 +221,20 @@ class Ventana1(QMainWindow):
         self.ladoDerecho.addRow(self.respuesta3)
 
         self.botonbuscar = QPushButton("Buscar")
-
         self.botonbuscar.setFixedWidth(90)
-
         self.botonbuscar.setStyleSheet("background-color: #008B45;"
                                           "color: #FFFFFF;"
                                           "padding: 10px;"
                                           "margin-top: 40px;")
-
         self.botonbuscar.clicked.connect(self.accion_botonBuscar)
 
         self.botonRecuperar = QPushButton("Recuperar")
-
         self.botonRecuperar.setFixedWidth(90)
-
         self.botonRecuperar.setStyleSheet("background-color: #008B45;"
                                           "color: #FFFFFF;"
                                           "padding: 10px;"
                                           "margin-top: 40px;")
-
         self.botonRecuperar.clicked.connect(self.accion_botonRecuperar)
-
         self.ladoDerecho.addRow(self.botonbuscar, self.botonRecuperar)
 
         self.botonContinuar = QPushButton("Continuar")
@@ -266,12 +244,15 @@ class Ventana1(QMainWindow):
         self.ladoDerecho.addRow(self.botonContinuar)
 
 
-
-
         self.horizontal.addLayout(self.ladoDerecho)
+
+
 
         # ------------- SIEMPRE PONER DE ULTIMO ---------------------
         self.fondo.setLayout(self.horizontal)
+
+
+
 
         self.ventanaDialogo = QDialog(None, QtCore.Qt.WindowSystemMenuHint | QtCore.Qt.WindowTitleHint)
 
