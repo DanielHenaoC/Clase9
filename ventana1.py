@@ -362,7 +362,6 @@ class Ventana1(QMainWindow):
             self.file.close()
 
     # Metodo boton buscar
-
     def accion_botonBuscar(self):
 
         self.datosCorrectos = True

@@ -88,16 +88,17 @@ class Ventana2(QMainWindow):
         self.botones = QButtonGroup()
         self.botones.setExclusive(False)
 
-        for fila in range(1, self.numeroUsuario):
-            for columna in range(1, self.elementosPorColumna+1):
+        for fila in range(self.numeroUsuario):
+            for columna in range(self.elementosPorColumna):
                 if self.contador < self.numeroUsuario:
                     self.ventanaAuxiliar = QWidget()
                     self.ventanaAuxiliar.setFixedHeight(100)
                     self.ventanaAuxiliar.setFixedWidth(200)
-
                     self.verticalCuadricula = QVBoxLayout()
+
                     self.botonAccion = QPushButton(self.usuario[self.contador].documento)
                     self.botonAccion.setFixedWidth(150)
+                    self.botonAccion.setFixedHeight(50)
                     self.botonAccion.setStyleSheet("background-color: #008B45; color: black; padding: 10px;")
                     self.verticalCuadricula.addWidget(self.botonAccion)
                     self.botones.addButton(self.botonAccion, int(self.usuario[self.contador].documento))
