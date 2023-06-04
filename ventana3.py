@@ -121,19 +121,3 @@ class Ventana3(QMainWindow):
     def metodo_volver(self):
             self.hide()
             self.ventanaAnterior.show()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
